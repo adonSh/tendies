@@ -1,14 +1,10 @@
 #!/usr/bin/env python3
 
 import os
-import re
-import requests
-import sys
+import urllib.request
 
 url = 'http://menus.tufts.edu/foodpro/shortmenu.asp?locationNum=11'
-menu = requests.get(url)
 
-if menu.status_code != 200:
-    print('Error: could not download menu', file=sys.stderr)
-elif re.search('Chicken Tenders', menu.text) != None:
-    os.system('notify-send "Tendies in Dewick!"')
+with urllib.request.urlopen(url) as menu:
+    if 'Chicken Tenders' in menu.read().decode('utf-8'):
+        os.system('notify-send "Tendies in Dewick!"')
