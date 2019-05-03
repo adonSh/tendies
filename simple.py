@@ -10,5 +10,5 @@ menu = requests.get(url)
 
 if menu.status_code != 200:
     print('Error: could not download menu', file=sys.stderr)
-elif re.search('[cC]hicken [tT]enders', menu.text) != None:
+elif re.search('Chicken Tenders', menu.text) != None:
     os.system('notify-send "Tendies in Dewick!"')
