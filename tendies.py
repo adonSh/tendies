@@ -23,22 +23,23 @@ def parse_args(p):
                    help='What are you looking for? (Default: tendies)')
     return p.parse_args()
 
-parser = argparse.ArgumentParser(description='Are there tendies in Dewick?')
-args = parse_args(parser)
-# Tufts' menu corresponds 11 to dewick and 9 to carm. Don't ask me why.
-location = '11' if args.location.lower() == 'dewick' else '9'
-url = 'http://menus.tufts.edu/foodpro/shortmenu.asp?locationNum=' + location
-menu = requests.get(url)
-regex = string.capwords(args.item)
+def main():
+    """ downloads menu and searches for food; returns int """
+    parser = argparse.ArgumentParser(description='Are there tendies in Dewick?')
+    args = parse_args(parser)
+    # Tufts' menu corresponds 11 to dewick and 9 to carm. Don't ask me why.
+    location = '11' if args.location.lower() == 'dewick' else '9'
+    url = 'http://menus.tufts.edu/foodpro/shortmenu.asp?locationNum=' + location
+    menu = requests.get(url)
+    regex = string.capwords(args.item)
 
-"""
-if menu downloaded without error, search for specified item and notify
-returns 0 on success, 1 on failure, 2 on error
-"""
-if menu.status_code != 200:
-    print('Error: could not download menu', file=sys.stderr)
-    exit(2)
-elif re.search(regex, menu.text) != None:
-    print(regex + ' in ' + args.location.capitalize() + '!')
-    exit(0)
-exit(1)
+    # return 0 on success, 1 on failure, 2 on error
+    if menu.status_code != 200:
+        print('Error: could not download menu', file=sys.stderr)
+        return 2
+    elif re.search(regex, menu.text) != None:
+        print(regex + ' in ' + args.location.capitalize() + '!')
+        return 0
+    return 1
+
+exit(main())
