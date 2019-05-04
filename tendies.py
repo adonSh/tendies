@@ -1,8 +1,7 @@
 #!/usr/bin/env python3
 
 """
-Are there tendies in dewick? Now also featuring other foods and Carm.
-
+Are there tendies in Dewick? Now also featuring other foods and Carm.
     --Adon Shapiro
 """
 
