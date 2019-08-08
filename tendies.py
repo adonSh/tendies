@@ -41,4 +41,4 @@ def main():
         return 0
     return 1
 
-exit(main())
+sys.exit(main())
